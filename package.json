@@ -1,0 +1,36 @@
+{
+  "name": "truffle-shavings",
+  "version": "1.0.0",
+  "description": "Truffle Boilerplate with solium, linguist, zeppelin, migrations, tests &tc",
+  "scripts": {
+    "test": "truffle test test/*.test.js",
+    "deploy": "truffle migrate --reset --compile-all",
+    "lint": "solium --dir contracts/",
+    "lint:watch": "solium --watch --dir contracts/",
+    "lint:fix": "solium  --dir contracts/ --fix"
+  },
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {},
+  "dependencies": {
+    "dotenv": "^5.0.1",
+    "solium": "^1.1.7",
+    "truffle-hdwallet-provider": "^0.0.5",
+    "web3-utils": "^1.0.0-beta.34",
+    "zeppelin-solidity": "^1.9.0",
+    "bancor-contracts": "https://github.com/bancorprotocol/contracts.git#973c9919e146a1b61297632f3253ee1c891462a9"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/okwme/truffle-boilerplate.git"
+  },
+  "keywords": [
+    "truffle",
+    "ethereum",
+    "web3"
+  ],
+  "author": "Billy Rennekamp <billy.rennekamp@gmail.com>",
+  "license": "ISC"
+}
