@@ -1,24 +1,24 @@
 var utils = require('web3-utils')
-var Sample = artifacts.require('./Sample.sol')
+var BondedToken = artifacts.require('./BondedToken.sol')
 
 let gasPrice = 1000000000 // 1GWEI
 
 let _ = '        '
 
-contract('Sample', async function(accounts) {
-  let sample
+contract('BondedToken', async function(accounts) {
+  let bondedToken
 
   before(done => {
     ;(async () => {
       try {
         var totalGas = new web3.BigNumber(0)
 
-        // Deploy Sample.sol
-        sample = await Sample.new()
-        var tx = web3.eth.getTransactionReceipt(sample.transactionHash)
+        // Deploy BondedToken.sol
+        bondedToken = await BondedToken.new()
+        var tx = web3.eth.getTransactionReceipt(bondedToken.transactionHash)
         totalGas = totalGas.plus(tx.gasUsed)
-        console.log(_ + tx.gasUsed + ' - Deploy sample')
-        sample = await Sample.deployed()
+        console.log(_ + tx.gasUsed + ' - Deploy bondedToken')
+        bondedToken = await BondedToken.deployed()
 
         console.log(_ + '-----------------------')
         console.log(_ + totalGas.toFormat(0) + ' - Total Gas')
@@ -30,7 +30,7 @@ contract('Sample', async function(accounts) {
     })()
   })
 
-  describe('Sample.sol', function() {
+  describe('BondedToken.sol', function() {
     it('should pass', async function() {
       assert(
         true === true,

@@ -19,8 +19,7 @@
     "solium": "^1.1.7",
     "truffle-hdwallet-provider": "^0.0.5",
     "web3-utils": "^1.0.0-beta.34",
-    "zeppelin-solidity": "^1.9.0",
-    "bancor-contracts": "https://github.com/bancorprotocol/contracts.git#973c9919e146a1b61297632f3253ee1c891462a9"
+    "zeppelin-solidity": "^1.9.0"
   },
   "repository": {
     "type": "git",

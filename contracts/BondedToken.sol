@@ -1,8 +1,8 @@
 pragma solidity ^0.4.23;
 
-import "zeppelin-solidity/contracts/token/ERC20/StandardToken.sol";
-import "zeppelin-solidity/contracts/math/SafeMath.sol";
-import "bancor-contracts/solidity/contracts/converter/BancorFormula.sol";
+import "../node_modules/zeppelin-solidity/contracts/token/ERC20/StandardToken.sol";
+import "../node_modules/zeppelin-solidity/contracts/math/SafeMath.sol";
+import "./BancorFormula.sol";
 
 contract BondedToken is StandardToken, BancorFormula {
     using SafeMath for uint256;
@@ -39,7 +39,7 @@ contract BondedToken is StandardToken, BancorFormula {
         virtualBalance = _virtualBalance;
     }
 
-    function() payable {}
+    function() public payable {}
 
 
     function getBuy(uint256 totalSupply, uint256 poolBalance, uint256 buyValue) public constant returns(uint256) {
@@ -64,13 +64,12 @@ contract BondedToken is StandardToken, BancorFormula {
     * @param sender The recepient of bought tokens
     */
     function buy(address sender) public payable returns(bool) {
-        require(msg.value > 0);
+        require(msg.value > 0, "Msg.value must be greater than 0");
         uint256 tokens = getBuy(totalSupply_, poolBalance, msg.value);
-        require(tokens > 0);
-        require(_mint(sender, tokens));
+        require(tokens > 0, "Buy must be greater than 0");
+        require(_mint(sender, tokens), "mint must succeed");
 
         poolBalance = poolBalance.add(msg.value);
-        this.transfer(msg.value);
         emit Buy(sender, poolBalance, totalSupply_, tokens, msg.value);
         return true;
     }
@@ -80,14 +79,14 @@ contract BondedToken is StandardToken, BancorFormula {
     * @param sellAmount The amount of tokens to sell
     */
     function sell(uint256 sellAmount) public returns(bool) {
-        require(sellAmount > 0);
-        require(balanceOf(msg.sender) >= sellAmount);
+        require(sellAmount > 0, "sell amount must be greater than 0");
+        require(balanceOf(msg.sender) >= sellAmount, "sell amount must be less than or equal to sellser's balance");
 
         uint256 saleReturn = getSell(totalSupply_, poolBalance, sellAmount);
 
-        require(saleReturn > 0);
-        require(saleReturn <= poolBalance);
-        require(_burn(msg.sender, sellAmount));
+        require(saleReturn > 0, "Sale must be greater than 0");
+        require(saleReturn <= poolBalance, "Sale must be less than pool balance");
+        require(_burn(msg.sender, sellAmount), "burn must suceed");
         poolBalance = poolBalance.sub(saleReturn);
 
         msg.sender.transfer(saleReturn);
